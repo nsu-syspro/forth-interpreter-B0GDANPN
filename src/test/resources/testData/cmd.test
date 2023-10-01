@@ -1,0 +1,9 @@
+in:
+1 2 over
+.
+65
+emit
+
+out:
+1
+A
