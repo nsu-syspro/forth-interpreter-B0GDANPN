@@ -4,7 +4,7 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class Interpreter {
-    Stack<Integer> stack;
+    Stack<Integer> stack=new Stack<>();
 
     boolean exit = false;
 
@@ -39,8 +39,8 @@ public class Interpreter {
     private void doLogicOperator(String command) {
         int l, r;
         try {
-            l = stack.pop();
             r = stack.pop();
+            l = stack.pop();
         } catch (EmptyStackException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }
@@ -77,8 +77,8 @@ public class Interpreter {
                 break;
             case "swap":
                 try {
-                    int l = stack.pop();
                     int r = stack.pop();
+                    int l = stack.pop();
                     stack.add(r);
                     stack.add(l);
                 } catch (EmptyStackException e) {
@@ -87,9 +87,9 @@ public class Interpreter {
                 break;
             case "rot":
                 try {
-                    int first = stack.pop();
-                    int second = stack.pop();
                     int third = stack.pop();
+                    int second = stack.pop();
+                    int first = stack.pop();
                     stack.add(third);
                     stack.add(first);
                     stack.add(second);
@@ -117,8 +117,8 @@ public class Interpreter {
     private void doArithmeticOperation(String command) {
         int l, r;
         try {
-            l = stack.pop();
             r = stack.pop();
+            l = stack.pop();
         } catch (EmptyStackException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }
