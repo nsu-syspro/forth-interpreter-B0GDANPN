@@ -15,7 +15,12 @@ public class Stack {
 
     public void add(int X) {
         top++;
-        A.add(X);
+        if (A.size()-1>=top){
+            A.set(top,X);
+        }
+        else{
+            A.add(X);
+        }
     }
 
     public int peek() {

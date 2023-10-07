@@ -15,6 +15,8 @@ public class ArithmeticOperation extends Operation {
         try {
             r = context.stack.pop();
             l = context.stack.pop();
+            context.stack.add(l);
+            context.stack.add(r);
         } catch (EmptyStackException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }
