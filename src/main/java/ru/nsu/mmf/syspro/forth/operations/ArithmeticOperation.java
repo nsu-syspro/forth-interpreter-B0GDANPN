@@ -5,7 +5,7 @@ import ru.nsu.mmf.syspro.forth.exceptions.EmptyStackException;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
 public class ArithmeticOperation extends Operation {
-    private String command;
+    private final String command;
     public ArithmeticOperation(String command){
         this.command=command;
     }
@@ -13,8 +13,8 @@ public class ArithmeticOperation extends Operation {
     public void apply(Context context) {
         int l, r;
         try {
-            r = (int) context.stack.pop();
-            l = (int) context.stack.pop();
+            r = context.stack.pop();
+            l = context.stack.pop();
         } catch (EmptyStackException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }

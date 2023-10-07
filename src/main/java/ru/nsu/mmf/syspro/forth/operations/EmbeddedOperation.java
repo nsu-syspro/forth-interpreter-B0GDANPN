@@ -5,7 +5,7 @@ import ru.nsu.mmf.syspro.forth.exceptions.EmptyStackException;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
 public class EmbeddedOperation extends Operation {
-    private String command;
+    private final String command;
     public EmbeddedOperation(String command){
         this.command=command;
     }
@@ -14,7 +14,7 @@ public class EmbeddedOperation extends Operation {
         switch (command) {
             case "dup":
                 try {
-                    int top = (int) context.stack.peek();
+                    int top = context.stack.peek();
                     context.stack.add(top);
                 } catch (EmptyStackException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
@@ -36,8 +36,8 @@ public class EmbeddedOperation extends Operation {
                 break;
             case "swap":
                 try {
-                    int r = (int) context.stack.pop();
-                    int l = (int) context.stack.pop();
+                    int r = context.stack.pop();
+                    int l = context.stack.pop();
                     context.stack.add(r);
                     context.stack.add(l);
                 } catch (EmptyStackException e) {
@@ -46,9 +46,9 @@ public class EmbeddedOperation extends Operation {
                 break;
             case "rot":
                 try {
-                    int third = (int) context.stack.pop();
-                    int second = (int) context.stack.pop();
-                    int first = (int) context.stack.pop();
+                    int third = context.stack.pop();
+                    int second = context.stack.pop();
+                    int first = context.stack.pop();
                     context.stack.add(third);
                     context.stack.add(first);
                     context.stack.add(second);
@@ -58,7 +58,7 @@ public class EmbeddedOperation extends Operation {
                 break;
             case "emit":
                 try {
-                    int number = (int) context.stack.pop();
+                    int number = context.stack.pop();
                     System.out.print((char) number);
                 } catch (EmptyStackException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
@@ -72,8 +72,8 @@ public class EmbeddedOperation extends Operation {
                 break;
             case "over":
                 try {
-                    int r = (int) context.stack.pop();
-                    int l = (int) context.stack.pop();
+                    int r = context.stack.pop();
+                    int l = context.stack.pop();
                     context.stack.add(l);
                     context.stack.add(r);
                     context.stack.add(l);
