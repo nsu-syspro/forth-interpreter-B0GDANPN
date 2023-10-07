@@ -1,159 +1,41 @@
 package ru.nsu.mmf.syspro.forth;
 
-import java.util.EmptyStackException;
-import java.util.Stack;
+import ru.nsu.mmf.syspro.forth.operations.*;
 
 public class Interpreter {
-    Stack<Integer> stack=new Stack<>();
-
-    boolean exit = false;
+    public Context context=new Context();
 
     public void interpret(String line) {
         String[] commands = line.split("\\s+");
-        for (int i=0;i<commands.length;i++) {
-            if (isPrintString(commands[i])){
-                doPrintString(commands[i+1]);
-                i++;
-                continue;
-            }
+        for (int i = 0; i < commands.length && !context.exit; i++) {
             if (isNumeric(commands[i])) {
-                stack.add(Integer.parseInt(commands[i]));
+                context.stack.add(Integer.parseInt(commands[i]));
                 continue;
             }
-            if (isArithmeticOperator(commands[i])) {
-                doArithmeticOperation(commands[i]);
-                continue;
+            Operation operation=new Operation();
+            Selector selector=new Selector();
+            TypeOperation typeOperation=selector.choose(commands[i]);
+            switch (typeOperation){
+                case LOGIC:{
+                    operation= new LogicOperation(commands[i]);
+                    break;
+                }
+                case PRINT_STRING:{
+                    operation=new PrintStringOperation(commands[i+1]);
+                    i++;
+                    break;
+                }
+                case ARITHMETIC:{
+                    operation= new ArithmeticOperation(commands[i]);
+                    break;
+                }
+                case EMBEDDED:{
+                    operation= new EmbeddedOperation(commands[i]);
+                }
             }
-            if (isEmbeddedOperator(commands[i])) {
-                doEmbeddedOperation(commands[i]);
-                continue;
-            }
-            if (isLogicOperator(commands[i])) {
-                doLogicOperator(commands[i]);
-            }
+            operation.apply(context);
         }
     }
-    private void doPrintString(String command){
-        System.out.print(command.substring(0, command.length() - 1));
-    }
-    private void doLogicOperator(String command) {
-        int l, r;
-        try {
-            r = stack.pop();
-            l = stack.pop();
-        } catch (EmptyStackException e) {
-            throw new InterpreterException("Not enough numbers on the stack");
-        }
-        boolean res = switch (command) {
-            case ">" -> l > r;
-            case "<" -> l < r;
-            default -> l == r;
-        };
-        stack.add(res ? 1 : 0);
-    }
-    private void doEmbeddedOperation(String command) {
-        switch (command) {
-            case "dup":
-                try {
-                    int top = stack.peek();
-                    stack.add(top);
-                } catch (EmptyStackException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
-            case "drop":
-                try {
-                    stack.pop();
-                } catch (EmptyStackException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
-            case ".":
-                try {
-                    System.out.print(stack.pop());
-                } catch (EmptyStackException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
-            case "swap":
-                try {
-                    int r = stack.pop();
-                    int l = stack.pop();
-                    stack.add(r);
-                    stack.add(l);
-                } catch (EmptyStackException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
-            case "rot":
-                try {
-                    int third = stack.pop();
-                    int second = stack.pop();
-                    int first = stack.pop();
-                    stack.add(third);
-                    stack.add(first);
-                    stack.add(second);
-                } catch (EmptyStackException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
-            case "emit":
-                try {
-                    int number = stack.pop();
-                    System.out.print((char) number);
-                } catch (EmptyStackException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
-            case "cr":
-                System.out.println();
-                break;
-            case "exit":
-                this.exit = true;
-                break;
-        }
-    }
-
-    private void doArithmeticOperation(String command) {
-        int l, r;
-        try {
-            r = stack.pop();
-            l = stack.pop();
-        } catch (EmptyStackException e) {
-            throw new InterpreterException("Not enough numbers on the stack");
-        }
-        if ((command.equals("mod") || command.equals("/")) && r == 0) {
-            throw new InterpreterException("Error: division by zero");
-        }
-        int res = switch (command) {
-            case "+" -> l + r;
-            case "-" -> l - r;
-            case "*" -> l * r;
-            case "/" -> l / r;
-            default -> l % r;
-        };
-        stack.add(res);
-    }
-
-    private boolean isPrintString(String command){
-        return command.equals(".\"");
-    }
-    private boolean isEmbeddedOperator(String command) {
-        return command.equals("dup") || command.equals("drop") || command.equals(".")
-                || command.equals("swap") || command.equals("rot")
-                || command.equals("emit") || command.equals("cr")
-                || command.equals("exit");
-    }
-
-    private boolean isArithmeticOperator(String command) {
-        return command.equals("*") || command.equals("+") || command.equals("-")
-                || command.equals("/") || command.equals("mod");
-    }
-
-    private boolean isLogicOperator(String command) {
-        return command.equals(">") || command.equals("=") || command.equals("<");
-    }
-
     private boolean isNumeric(String command) {
         if (command == null) {
             return false;
