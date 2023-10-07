@@ -4,21 +4,21 @@ import ru.nsu.mmf.syspro.forth.exceptions.EmptyStackException;
 
 import java.util.*;
 
-public class Stack<T> {
-    private final ArrayList<T> A;
+public class Stack {
+    private final ArrayList<Integer> A;
 
     private int top = -1;
 
     public Stack() {
-        this.A = new ArrayList<T>();
+        this.A = new ArrayList<Integer>();
     }
 
-    public void add(T X) {
+    public void add(int X) {
         top++;
         A.add(X);
     }
 
-    public T peek() {
+    public int peek() {
         if (top == -1) {
             throw new ru.nsu.mmf.syspro.forth.exceptions.EmptyStackException();
         } else {
@@ -26,11 +26,11 @@ public class Stack<T> {
         }
     }
 
-    public T pop() {
+    public int pop() {
         if (top == -1) {
             throw new EmptyStackException();
         } else {
-            T res=A.get(top);
+            int res = A.get(top);
             top--;
             return res;
         }
