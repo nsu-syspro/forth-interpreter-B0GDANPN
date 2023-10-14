@@ -1,9 +1,13 @@
 package ru.nsu.mmf.syspro.forth;
 
+import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 import ru.nsu.mmf.syspro.forth.operations.*;
 
 public class Interpreter {
-    public Context context=new Context();
+    public Interpreter(Printable printer){
+        this.context=new Context(printer);
+    }
+    public Context context;
 
     public void interpret(String line) {
         context.commands = line.split("\\s+");
@@ -35,10 +39,15 @@ public class Interpreter {
                 }
                 case EMBEDDED:{
                     operation= new EmbeddedOperation(context.commands[i]);
+                    break;
+                }
+                default:{
+                    throw new InterpreterException("Invalid operation");
                 }
             }
             operation.apply(context);
         }
+        System.out.println();
     }
     private boolean isNumeric(String command) {
         if (command == null) {

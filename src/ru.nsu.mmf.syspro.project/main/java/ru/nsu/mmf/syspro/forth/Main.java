@@ -7,14 +7,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Interpreter interpreter = new Interpreter();
-        while (!interpreter.context.exit) {
-            String line = scanner.nextLine();
+        Interpreter interpreter = new Interpreter(Printable printer);
+        String line = scanner.nextLine();
+        while (!interpreter.context.exit && !line.isEmpty()) {
             try {
                 interpreter.interpret(line);
             } catch (InterpreterException e) {
-                System.err.println(e.getMessage());
+                interpreter.context.printer.print(e.getMessage()+'\n');
+                //System.err.println(e.getMessage());
             }
+            line = scanner.nextLine();
         }
     }
 }
