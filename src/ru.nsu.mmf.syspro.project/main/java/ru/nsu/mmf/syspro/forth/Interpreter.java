@@ -10,6 +10,7 @@ public class Interpreter {
     public Context context;
 
     public void interpret(String line) {
+        if (line.isEmpty()) return;
         context.commands = line.split("\\s+");
         for (int i = 0; i < context.commands.length && !context.exit; i++) {
             if (isNumeric(context.commands[i])) {
@@ -47,7 +48,7 @@ public class Interpreter {
             }
             operation.apply(context);
         }
-        System.out.println();
+        context.printer.print("\n");
     }
     private boolean isNumeric(String command) {
         if (command == null) {

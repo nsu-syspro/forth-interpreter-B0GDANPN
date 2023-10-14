@@ -29,7 +29,7 @@ public class EmbeddedOperation extends Operation {
                 break;
             case ".":
                 try {
-                    System.out.print(context.stack.pop());
+                    context.printer.print(Integer.toString(context.stack.pop()));
                 } catch (EmptyStackException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
@@ -59,13 +59,13 @@ public class EmbeddedOperation extends Operation {
             case "emit":
                 try {
                     int number = context.stack.pop();
-                    System.out.print((char) number);
+                    context.printer.print(Character.toString((char)number));
                 } catch (EmptyStackException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
             case "cr":
-                System.out.println();
+                context.printer.print("\n");
                 break;
             case "exit":
                 context.exit = true;
