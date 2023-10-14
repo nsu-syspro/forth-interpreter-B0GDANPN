@@ -1,0 +1,23 @@
+package ru.nsu.mmf.syspro.forth;
+
+import junit.framework.TestCase;
+import org.junit.Test;
+
+public class StackTest {
+    private StringBuilder sb=new StringBuilder();
+    @Test
+    public void check(){
+        sb=new StringBuilder();
+        Printable printer=new Printable() {
+            @Override
+            public void print(String line) {
+                sb.append(line);
+            }
+        };
+        Interpreter interpreter= new Interpreter(printer);
+        interpreter.interpret("1 2 3");
+        interpreter.interpret("4 5");
+        interpreter.interpret(". . . . .");
+        TestCase.assertEquals("\n\n54321\n",sb.toString());
+    }
+}
