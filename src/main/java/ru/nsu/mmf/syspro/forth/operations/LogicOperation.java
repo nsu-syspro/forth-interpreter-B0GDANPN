@@ -1,10 +1,9 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
 import ru.nsu.mmf.syspro.forth.Context;
-import ru.nsu.mmf.syspro.forth.exceptions.EmptyStackException;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
-public class LogicOperation extends Operation {
+public class LogicOperation implements Operation {
     private final String command;
     public LogicOperation(String command){
         this.command=command;

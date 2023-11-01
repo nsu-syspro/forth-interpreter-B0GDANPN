@@ -2,7 +2,7 @@ package ru.nsu.mmf.syspro.forth.operations;
 
 import ru.nsu.mmf.syspro.forth.Context;
 
-public class PrintStringOperation extends Operation {
+public class PrintStringOperation implements Operation {
     private final int start,end;
     public PrintStringOperation(int start,int end){
         this.start=start;

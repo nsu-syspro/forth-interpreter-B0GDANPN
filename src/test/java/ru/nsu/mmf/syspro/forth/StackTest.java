@@ -2,6 +2,7 @@ package ru.nsu.mmf.syspro.forth;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+//Чистый код // соверешенный код
 
 public class StackTest {
     private StringBuilder sb=new StringBuilder();

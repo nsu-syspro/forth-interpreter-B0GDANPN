@@ -2,6 +2,6 @@ package ru.nsu.mmf.syspro.forth.operations;
 
 import ru.nsu.mmf.syspro.forth.Context;
 
-public interface Operable {
+public interface Operation {
     void apply(Context context);
 }

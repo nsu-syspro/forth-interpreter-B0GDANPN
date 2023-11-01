@@ -1,10 +1,9 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
 import ru.nsu.mmf.syspro.forth.Context;
-import ru.nsu.mmf.syspro.forth.exceptions.EmptyStackException;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
-public class EmbeddedOperation extends Operation {
+public class EmbeddedOperation implements Operation {
     private final String command;
     public EmbeddedOperation(String command){
         this.command=command;
