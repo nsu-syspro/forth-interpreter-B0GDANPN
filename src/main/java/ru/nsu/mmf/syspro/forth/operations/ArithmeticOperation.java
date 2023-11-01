@@ -16,7 +16,7 @@ public class ArithmeticOperation implements Operation {
         int l, r;
         try {
             r = context.stack.removeLast();
-            l = context.stack.removeLast();
+            l = context.stack.removeLast();//
         } catch (NoSuchElementException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }
