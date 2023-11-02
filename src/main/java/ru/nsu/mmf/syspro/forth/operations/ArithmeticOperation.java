@@ -1,21 +1,22 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
-import ru.nsu.mmf.syspro.forth.Interpreter;
+import ru.nsu.mmf.syspro.forth.Context;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
 import java.util.NoSuchElementException;
 
-public final class ArithmeticOperation implements Operation {
+public class ArithmeticOperation implements Operation {
     private final String command;
     public ArithmeticOperation(String command){
         this.command=command;
     }
+    // TODO удалять числа со стека
     @Override
-    public void apply(Interpreter interpreter) {
+    public void apply(Context context) {
         int l, r;
         try {
-            r = interpreter.pop();
-            l = interpreter.pop();
+            r = context.stack.removeLast();
+            l = context.stack.removeLast();
         } catch (NoSuchElementException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }
@@ -29,6 +30,6 @@ public final class ArithmeticOperation implements Operation {
             case "/" -> l / r;
             default -> l % r;
         };
-        interpreter.push(res);
+        context.stack.add(res);
     }
 }

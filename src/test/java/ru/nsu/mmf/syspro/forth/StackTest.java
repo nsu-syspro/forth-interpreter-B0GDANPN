@@ -2,6 +2,7 @@ package ru.nsu.mmf.syspro.forth;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+//Чистый код // соверешенный код
 
 import java.io.PrintStream;
 //Чистый код // соверешенный код
