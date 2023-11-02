@@ -13,7 +13,7 @@ public class Main {//TODO try use sealed classes
         Printable printer =new Printable() {
             @Override
             public void print(String line) {
-                System.out.print(line);
+                System.out.print(line);//
             }
         };
         Interpreter interpreter = new Interpreter(printer);
