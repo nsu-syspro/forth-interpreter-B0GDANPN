@@ -9,7 +9,7 @@ public class Main {//TODO try use sealed classes
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        //TODO use Appendable printstream
+        //TODO use Appendable printstreamm
         Printable printer =new Printable() {
             @Override
             public void print(String line) {
