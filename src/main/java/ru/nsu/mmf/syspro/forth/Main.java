@@ -18,7 +18,7 @@ public class Main {//TODO try use sealed classes
         Interpreter interpreter = new Interpreter(printer);
         try {
             String line = scanner.nextLine();
-            while (interpreter.interpret(line)){
+            while (!interpreter.interpret(line)){
                 line = scanner.nextLine();
             }
         } catch (InterpreterException e) {

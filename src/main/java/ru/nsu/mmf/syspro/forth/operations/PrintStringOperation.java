@@ -1,17 +1,21 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
+import ru.nsu.mmf.syspro.forth.Interpreter;
+
 public final class PrintStringOperation implements Operation {
     private final int start,end;
-    public PrintStringOperation(int start,int end){
+    private final String[] text;
+    public PrintStringOperation(String[] tmp,int start,int end){
+        text=tmp;
         this.start=start;
         this.end=end;
     }
     @Override
-    public void apply(Context context) {
+    public void apply(Interpreter interpreter) {
         for (int i=start;i<=end-1;i++){
-            context.printer.print(context.commands[i]+' ');
+            interpreter.print(text[i]+' ');
         }
-        String endingStr=context.commands[end];
-        context.printer.print(endingStr.substring(0, endingStr.length() - 1));
+        String endingStr=text[end];
+        interpreter.print(endingStr.substring(0, endingStr.length() - 1));
     }
 }

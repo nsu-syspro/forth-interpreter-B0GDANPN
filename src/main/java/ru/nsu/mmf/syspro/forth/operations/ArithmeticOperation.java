@@ -1,5 +1,6 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
+import ru.nsu.mmf.syspro.forth.Interpreter;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
 import java.util.NoSuchElementException;
@@ -10,11 +11,11 @@ public final class ArithmeticOperation implements Operation {
         this.command=command;
     }
     @Override
-    public void apply(Context context) {
+    public void apply(Interpreter interpreter) {
         int l, r;
         try {
-            r = context.stack.removeLast();
-            l = context.stack.removeLast();//
+            r = interpreter.pop();
+            l = interpreter.pop();
         } catch (NoSuchElementException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }
@@ -28,6 +29,6 @@ public final class ArithmeticOperation implements Operation {
             case "/" -> l / r;
             default -> l % r;
         };
-        context.stack.add(res);
+        interpreter.push(res);
     }
 }

@@ -6,50 +6,40 @@ import ru.nsu.mmf.syspro.forth.operations.*;
 import java.util.ArrayList;
 
 public class Parser {
-    private ArrayList<Command> ;
-    private Integer it=0;
+    private ArrayList<Operation> operations=new ArrayList<>();
+    private Integer it = 0;
 
-    public Parser(String line){
+    public Parser(String line) {
         Selector selector = new Selector();
-        String[] tmp= line.split("\\s+");
-        for (int i = 0; i < tmp.length; i++){
-            if(isNumeric(tmp[i])){
-                commands.add(new Command(TypeOperation.PUSH,tmp[i]));
-                continue;
-            }
+        String[] tmp = line.split("\\s+");
+        for (int i = 0; i < tmp.length; i++) {
             TypeOperation typeOperation = selector.choose(tmp[i]);
+            Operation operation = switch (typeOperation) {
+                case LOGIC -> new LogicOperation(tmp[i]);
+                case PUSH -> new PushOperation(tmp[i]);
+                case PRINT_STRING -> {//TODO union . and print_string
+                    int j = i + 1;
+                    int prev_i=i+1;
+                    while (tmp[j].charAt(tmp[j].length() - 1) != '"') {
+                        j++;
+                    }
+                    i = j;
+                    yield  new PrintStringOperation(tmp,prev_i, j);
+                }
+                case ARITHMETIC -> new ArithmeticOperation(tmp[i]);
+                case EMBEDDED->new EmbeddedOperation(tmp[i]);
+                default -> throw new InterpreterException("Invalid operation");
+            };
+            operations.add(operation);
         }
     }
-
-        Operation operation;
-        Selector selector = new Selector();
-        TypeOperation typeOperation = selector.choose(context.commands[i]);
-        switch (typeOperation) {//TODO replace without break
-            case LOGIC: {
-                operation = new LogicOperation(context.commands[i]);
-                break;
-            }
-            case PRINT_STRING: {//TODO union . and print_string
-                int j = i + 1;
-                while (context.commands[j].charAt(context.commands[j].length() - 1) != '"') {
-                    j++;
-                }
-                operation = new PrintStringOperation(i + 1, j);
-                i = j;
-                break;
-            }
-            case ARITHMETIC: {
-                operation = new ArithmeticOperation(context.commands[i]);
-                break;
-            }
-            case EMBEDDED: {
-                operation = new EmbeddedOperation(context.commands[i]);
-                break;
-            }
-            default: {
-                throw new InterpreterException("Invalid operation");
-            }
+    public Operation getOperation(){
+        if (it==operations.size()){
+            it=0;
+            operations.clear();
+            return null;
         }
-        operation.apply(context);
+        it++;
+        return operations.get(it-1);
     }
 }
