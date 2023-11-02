@@ -1,7 +1,7 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
-import ru.nsu.mmf.syspro.forth.Context;
+import ru.nsu.mmf.syspro.forth.Interpreter;
 
-public interface Operation {
-    void apply(Context context);
+public sealed interface Operation permits ArithmeticOperation, EmbeddedOperation, LogicOperation, PrintStringOperation,PushOperation {
+    void apply(Interpreter interpreter);
 }

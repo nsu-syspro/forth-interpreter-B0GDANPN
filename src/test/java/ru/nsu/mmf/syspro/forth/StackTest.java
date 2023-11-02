@@ -2,6 +2,8 @@ package ru.nsu.mmf.syspro.forth;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+
+import java.io.PrintStream;
 //Чистый код // соверешенный код
 
 public class StackTest {
@@ -9,7 +11,7 @@ public class StackTest {
     @Test
     public void check(){
         sb=new StringBuilder();
-        Printable printer=new Printable() {
+        PrintStream printer=new PrintStream(System.out){
             @Override
             public void print(String line) {
                 sb.append(line);

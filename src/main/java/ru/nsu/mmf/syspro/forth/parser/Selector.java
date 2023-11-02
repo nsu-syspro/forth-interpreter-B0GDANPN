@@ -1,4 +1,4 @@
-package ru.nsu.mmf.syspro.forth;
+package ru.nsu.mmf.syspro.forth.parser;
 
 import ru.nsu.mmf.syspro.forth.operations.*;
 
@@ -6,6 +6,9 @@ public class Selector {
     public TypeOperation choose(String command){
         if (isPrintString(command)) {
             return TypeOperation.PRINT_STRING;
+        }
+        else if (isNumeric(command)){
+            return TypeOperation.PUSH;
         }
         else if (isArithmeticOperation(command)) {
             return TypeOperation.ARITHMETIC;
@@ -20,6 +23,17 @@ public class Selector {
     }
     private boolean isPrintString(String command) {
         return command.equals(".\"");
+    }
+    private boolean isNumeric(String command) {
+        if (command == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(command);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
     private boolean isEmbeddedOperation(String command) {
         return command.equals("dup") || command.equals("drop") || command.equals(".")
