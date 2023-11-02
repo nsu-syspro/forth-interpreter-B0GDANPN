@@ -10,7 +10,7 @@ public class Main {//TODO try use sealed classes
         Scanner scanner = new Scanner(System.in);
 
         //TODO use Appendable printstream
-        Printable printer =new Printable() {
+        Printable printer =new Printable() {//
             @Override
             public void print(String line) {
                 System.out.print(line);
