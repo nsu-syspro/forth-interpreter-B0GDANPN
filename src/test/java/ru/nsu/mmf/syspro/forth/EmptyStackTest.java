@@ -2,13 +2,14 @@ package ru.nsu.mmf.syspro.forth;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
 import java.io.PrintStream;
 
-public class PrintStringTest {
+public class EmptyStackTest {
     private StringBuilder sb=new StringBuilder();
     @Test
-    public void print(){
+    public void empty(){
         sb=new StringBuilder();
         PrintStream printer=new PrintStream(System.out){
             @Override
@@ -17,8 +18,11 @@ public class PrintStringTest {
             }
         };
         Interpreter interpreter= new Interpreter(printer);
-        interpreter.interpret(".\" Foo\"");
-        interpreter.interpret(".\" Foo boo\"");//
-        TestCase.assertEquals("Foo\nFoo boo\n",sb.toString());
+        try {
+            interpreter.interpret(".");
+        }
+        catch (InterpreterException e){
+            TestCase.assertEquals("Not enough numbers on the stack", e.getMessage());
+        }
     }
 }

@@ -1,82 +1,84 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
-import ru.nsu.mmf.syspro.forth.Context;
+import ru.nsu.mmf.syspro.forth.Interpreter;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
-public class EmbeddedOperation implements Operation {
+import java.util.NoSuchElementException;
+
+public final class EmbeddedOperation implements Operation {
     private final String command;
     public EmbeddedOperation(String command){
         this.command=command;
     }
     @Override
-    public void apply(Context context) {
+    public void apply(Interpreter interpreter) {
         switch (command) {
             case "dup":
                 try {
-                    int top = context.stack.peek();
-                    context.stack.add(top);
-                } catch (EmptyStackException e) {
+                    int top = interpreter.top();
+                    interpreter.push(top);
+                } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
             case "drop":
                 try {
-                    context.stack.pop();
-                } catch (EmptyStackException e) {
+                    interpreter.pop();
+                } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
             case ".":
                 try {
-                    context.printer.print(Integer.toString(context.stack.pop()));
-                } catch (EmptyStackException e) {
+                    interpreter.print(Integer.toString(interpreter.pop()));
+                } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
             case "swap":
                 try {
-                    int r = context.stack.pop();
-                    int l = context.stack.pop();
-                    context.stack.add(r);
-                    context.stack.add(l);
-                } catch (EmptyStackException e) {
+                    int r = interpreter.pop();
+                    int l = interpreter.pop();
+                    interpreter.push(r);
+                    interpreter.push(l);
+                } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
             case "rot":
                 try {
-                    int third = context.stack.pop();
-                    int second = context.stack.pop();
-                    int first = context.stack.pop();
-                    context.stack.add(third);
-                    context.stack.add(first);
-                    context.stack.add(second);
-                } catch (EmptyStackException e) {
+                    int third =interpreter.pop();
+                    int second = interpreter.pop();
+                    int first = interpreter.pop();
+                    interpreter.push(third);
+                    interpreter.push(first);
+                    interpreter.push(second);
+                } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
             case "emit":
                 try {
-                    int number = context.stack.pop();
-                    context.printer.print(Character.toString((char)number));
-                } catch (EmptyStackException e) {
+                    int number = interpreter.pop();
+                    interpreter.print(Character.toString((char)number));
+                } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
             case "cr":
-                context.printer.print("\n");
+                interpreter.print("\n");
                 break;
             case "exit":
-                context.exit = true;
+                interpreter.setExit(true);
                 break;
             case "over":
                 try {
-                    int r = context.stack.pop();
-                    int l = context.stack.pop();
-                    context.stack.add(l);
-                    context.stack.add(r);
-                    context.stack.add(l);
-                } catch (EmptyStackException e) {
+                    int r =interpreter.pop();
+                    int l = interpreter.pop();
+                    interpreter.push(l);
+                    interpreter.push(r);
+                    interpreter.push(l);
+                } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;

@@ -3,12 +3,14 @@ package ru.nsu.mmf.syspro.forth;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.io.PrintStream;
+
 public class EmbeddedTest {
     private StringBuilder sb=new StringBuilder();
     @Test
     public void emit(){
         sb=new StringBuilder();
-        Printable printer=new Printable() {
+        PrintStream printer=new PrintStream(System.out){
             @Override
             public void print(String line) {
                 sb.append(line);
@@ -22,7 +24,7 @@ public class EmbeddedTest {
     @Test
     public void cr(){
         sb=new StringBuilder();
-        Printable printer=new Printable() {
+        PrintStream printer=new PrintStream(System.out){
             @Override
             public void print(String line) {
                 sb.append(line);

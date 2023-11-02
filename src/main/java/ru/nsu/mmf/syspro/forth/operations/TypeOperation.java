@@ -4,6 +4,7 @@ public enum TypeOperation {
     ARITHMETIC,
     EMBEDDED,
     LOGIC,
+    PUSH,
     PRINT_STRING,
     NULL
 }
