@@ -2,28 +2,27 @@ package ru.nsu.mmf.syspro.forth;
 
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Main {//TODO try use sealed classes
-    //TODO create test checking empty stack
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        //TODO use Appendable printstreamm
-        Printable printer =new Printable() {
+        PrintStream printer=new PrintStream(System.out){
             @Override
-            public void print(String line) {
-                System.out.print(line);
+            public void print(String s){
+                System.out.print(s);
             }
         };
         Interpreter interpreter = new Interpreter(printer);
         try {
-            String line = scanner.nextLine();//TODO need hasNextLine?
-            while (interpreter.interpret(line)){
-                line = scanner.nextLine();//TODO return bool exit
+            String line = scanner.nextLine();
+            while (!interpreter.interpret(line)){
+                line = scanner.nextLine();
             }
         } catch (InterpreterException e) {
-            interpreter.context.printer.print(e.getMessage()+'\n');
+            interpreter.print(e.getMessage()+'\n');
         }
     }
 }
