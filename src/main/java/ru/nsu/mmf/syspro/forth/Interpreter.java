@@ -2,23 +2,42 @@ package ru.nsu.mmf.syspro.forth;
 
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 import ru.nsu.mmf.syspro.forth.operations.*;
+import ru.nsu.mmf.syspro.forth.parser.Selector;
+
+import java.io.PrintStream;
+import java.util.ArrayDeque;
 
 public class Interpreter {
-    public Interpreter(Printable printer) {
-        this.context = new Context(printer);
+    private boolean exit = false;
+    private ArrayDeque<Integer> stack=new ArrayDeque<>();
+    public void push(Integer number){
+        stack.push(number);
+    }
+    public void pop(Integer number){
+        stack.removeLast();
+    }
+    private final PrintStream printer;
+    public void print(String line){
+        printer.print(line);
+    }
+    public Interpreter(PrintStream printer) {
+        this.printer=printer;    }
+
+    public boolean isExit(){
+        return exit;
     }
 
-    public Context context;
-
-    public void interpret(String line) {
-        if (line.isEmpty()) return;
+    public boolean interpret(String line) {
+        if( line.isEmpty()){
+            return true;
+        }
         //TODO interpreter do only interpretrer funcs
         //TODO Don`t save commands in context
         //TODO create parser, thar returned next command(and type) or number(command push)
         context.commands = line.split("\\s+");
-        for (int i = 0; i < context.commands.length && !context.exit; i++) {
+        for (int i = 0; i < context.commands.length && !isExit(); i++) {
             if (isNumeric(context.commands[i])) {
-                context.stack.add(Integer.parseInt(context.commands[i]));
+                stack.push(Integer.parseInt(context.commands[i]));
                 continue;
             }
             Operation operation;
@@ -52,7 +71,8 @@ public class Interpreter {
             }
             operation.apply(context);
         }
-        context.printer.print("\n");
+        printer.print("\n");
+        return isExit();
     }
 
     private boolean isNumeric(String command) {

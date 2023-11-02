@@ -1,16 +1,14 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
-import ru.nsu.mmf.syspro.forth.Context;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
 import java.util.NoSuchElementException;
 
-public class ArithmeticOperation implements Operation {
+public final class ArithmeticOperation implements Operation {
     private final String command;
     public ArithmeticOperation(String command){
         this.command=command;
     }
-    // TODO удалять числа со стека
     @Override
     public void apply(Context context) {
         int l, r;

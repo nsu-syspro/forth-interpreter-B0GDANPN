@@ -1,8 +1,6 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
-import ru.nsu.mmf.syspro.forth.Context;
-
-public class PrintStringOperation implements Operation {
+public final class PrintStringOperation implements Operation {
     private final int start,end;
     public PrintStringOperation(int start,int end){
         this.start=start;

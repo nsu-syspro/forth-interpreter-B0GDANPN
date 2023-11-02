@@ -1,9 +1,10 @@
 package ru.nsu.mmf.syspro.forth.operations;
 
-import ru.nsu.mmf.syspro.forth.Context;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
-public class LogicOperation implements Operation {
+import java.util.NoSuchElementException;
+
+public final class LogicOperation implements Operation {
     private final String command;
     public LogicOperation(String command){
         this.command=command;
@@ -16,7 +17,7 @@ public class LogicOperation implements Operation {
             l = context.stack.pop();
             context.stack.add(l);
             context.stack.add(r);
-        } catch (EmptyStackException e) {
+        } catch (NoSuchElementException e) {
             throw new InterpreterException("Not enough numbers on the stack");
         }
         boolean res = switch (command) {
