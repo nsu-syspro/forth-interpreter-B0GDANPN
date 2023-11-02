@@ -12,7 +12,7 @@ public class Main {//TODO try use sealed classes
         PrintStream printer=new PrintStream(System.out){
             @Override
             public void print(String s){
-                System.out.print(s);
+                System.out.print(s);//
             }
         };
         Interpreter interpreter = new Interpreter(printer);
