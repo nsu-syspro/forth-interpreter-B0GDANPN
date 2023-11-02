@@ -18,7 +18,7 @@ public class PrintStringTest {
         };
         Interpreter interpreter= new Interpreter(printer);
         interpreter.interpret(".\" Foo\"");
-        interpreter.interpret(".\" Foo boo\"");
+        interpreter.interpret(".\" Foo boo\"");//
         TestCase.assertEquals("Foo\nFoo boo\n",sb.toString());
     }
 }
