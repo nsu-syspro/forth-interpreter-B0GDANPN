@@ -9,7 +9,10 @@ import java.util.Scanner;
 public class Main {//TODO try use sealed classes
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        PrintStream printer=new PrintStream(System.out){
+
+
+        //TODO use Appendable printstream
+        Printable printer =new Printable() {//
             @Override
             public void print(String s){
                 System.out.print(s);
