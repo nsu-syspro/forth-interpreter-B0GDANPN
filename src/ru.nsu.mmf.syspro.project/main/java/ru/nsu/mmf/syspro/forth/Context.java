@@ -3,7 +3,7 @@ package ru.nsu.mmf.syspro.forth;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
-public class Context {//TODO change visibility with private and make method
+public class Context {//TODO change visibility with private and make methods
     public ArrayDeque<Integer> stack=new ArrayDeque<>();
     public String[] commands;
     public final Printable printer;
