@@ -1,4 +1,4 @@
-package ru.nsu.mmf.syspro.forth.operations;
+package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
 import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
@@ -6,10 +6,13 @@ import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 import java.util.NoSuchElementException;
 
 public final class LogicOperation implements Operation {
+
     private final String command;
-    public LogicOperation(String command){
-        this.command=command;
+
+    public LogicOperation(String command) {
+        this.command = command;
     }
+
     @Override
     public void apply(Interpreter interpreter) {
         int l, r;

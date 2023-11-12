@@ -5,11 +5,11 @@ import org.junit.Test;
 
 import java.io.PrintStream;
 
-public class ArithmeticTest {
+public class ParserTest {
     private StringBuilder sb = new StringBuilder();
 
     @Test
-    public void checkPlus() {
+    public void parseEmpty() {
         sb = new StringBuilder();
         PrintStream printer = new PrintStream(System.out) {
             @Override
@@ -18,13 +18,16 @@ public class ArithmeticTest {
             }
         };
         Interpreter interpreter = new Interpreter(printer);
-        interpreter.interpret("1 2 +");
-        interpreter.interpret(".");
-        TestCase.assertEquals("3", sb.toString());
+        interpreter.interpret("");
+        interpreter.interpret("");
+        interpreter.interpret("");
+        interpreter.interpret("");
+        interpreter.interpret("");
+        TestCase.assertEquals("", sb.toString());
     }
 
     @Test
-    public void checkMinus() {
+    public void parseInvalid() {
         sb = new StringBuilder();
         PrintStream printer = new PrintStream(System.out) {
             @Override
@@ -33,23 +36,11 @@ public class ArithmeticTest {
             }
         };
         Interpreter interpreter = new Interpreter(printer);
-        interpreter.interpret("1 2 -");
+        interpreter.interpret("A");
+        interpreter.interpret("3");
         interpreter.interpret(".");
-        TestCase.assertEquals("-1", sb.toString());
-    }
-
-    @Test
-    public void checkMul() {
-        sb = new StringBuilder();
-        PrintStream printer = new PrintStream(System.out) {
-            @Override
-            public void print(String line) {
-                sb.append(line);
-            }
-        };
-        Interpreter interpreter = new Interpreter(printer);
-        interpreter.interpret("1 0 *");
-        interpreter.interpret(".");
-        TestCase.assertEquals("0", sb.toString());
+        interpreter.interpret("cr");
+        interpreter.interpret("B");
+        TestCase.assertEquals("3\n", sb.toString());
     }
 }

@@ -21,6 +21,6 @@ public class StackTest {
         interpreter.interpret("1 2 3");
         interpreter.interpret("4 5");
         interpreter.interpret(". . . . .");
-        TestCase.assertEquals("\n\n54321\n",sb.toString());
+        TestCase.assertEquals("54321",sb.toString());
     }
 }

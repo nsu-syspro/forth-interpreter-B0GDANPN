@@ -1,16 +1,14 @@
 package ru.nsu.mmf.syspro.forth;
 
-import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
-import ru.nsu.mmf.syspro.forth.operations.*;
+import ru.nsu.mmf.syspro.forth.operation.*;
 import ru.nsu.mmf.syspro.forth.parser.Parser;
-import ru.nsu.mmf.syspro.forth.parser.Selector;
 
-import java.io.PrintStream;
+import java.io.IOException;
 import java.util.ArrayDeque;
 
 public class Interpreter {
     private boolean exit = false;
-    private ArrayDeque<Integer> stack = new ArrayDeque<>();
+    private final ArrayDeque<Integer> stack = new ArrayDeque<>();
 
     public void push(Integer number) {
         stack.addLast(number);
@@ -24,33 +22,36 @@ public class Interpreter {
         return stack.peek();
     }
 
-    private final PrintStream printer;
+    private final Appendable printer;
 
     public void print(String line) {
-        printer.print(line);
+        try {
+            printer.append(line);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public Interpreter(PrintStream printer) {
+    public Interpreter(Appendable printer) {
         this.printer = printer;
     }
-    public void setExit(boolean flag){
-        exit=flag;
+
+    public void stopInterpreter() {
+        exit = true;
     }
+
     public boolean isExit() {
         return exit;
     }
 
     public boolean interpret(String line) {
-        if (line.isEmpty()) {
-            return false;
-        }
-        Parser parser = new Parser(line);
-        Operation operation = parser.getOperation();
+        Parser parser = new Parser();
+        parser.parseLine(line);
+        Operation operation = parser.nextOperation();
         while (operation != null) {
             operation.apply(this);
-            operation = parser.getOperation();
+            operation = parser.nextOperation();
         }
-        printer.print("\n");
         return isExit();
     }
 }
