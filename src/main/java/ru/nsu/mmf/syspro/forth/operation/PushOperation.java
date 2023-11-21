@@ -2,11 +2,11 @@ package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
 
-public final class PushOperation implements Operation {
+public final class PushOperation implements UnarOperation {
 
     private final int number;
 
-    public PushOperation(Integer number) {
+    public PushOperation(int number) {
         this.number = number;
     }
 

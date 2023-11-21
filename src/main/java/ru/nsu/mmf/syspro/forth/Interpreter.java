@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 
 public class Interpreter {
-    private boolean exit = false;
+    private boolean finishedState = false;
     private final ArrayDeque<Integer> stack = new ArrayDeque<>();
 
     public void push(Integer number) {
@@ -37,21 +37,26 @@ public class Interpreter {
     }
 
     public void stopInterpreter() {
-        exit = true;
+        finishedState = true;
     }
 
     public boolean isExit() {
-        return exit;
+        return finishedState;
     }
 
-    public boolean interpret(String line) {
+    public boolean interpret(String... lines) {
         Parser parser = new Parser();
-        parser.parseLine(line);
-        Operation operation = parser.nextOperation();
-        while (operation != null) {
-            operation.apply(this);
-            operation = parser.nextOperation();
+        for (String line : lines) {
+            parser.parseLine(line);
+            Operation operation = parser.nextOperation();
+            while (operation != null && !isExit()) {
+                operation.apply(this);
+                operation = parser.nextOperation();
+            }
+            if (isExit()) {
+                return true;
+            }
         }
-        return isExit();
+        return false;
     }
 }

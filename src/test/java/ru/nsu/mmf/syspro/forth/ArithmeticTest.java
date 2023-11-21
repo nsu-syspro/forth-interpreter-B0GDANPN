@@ -1,55 +1,35 @@
 package ru.nsu.mmf.syspro.forth;
 
-import junit.framework.TestCase;
+import static junit.framework.TestCase.assertEquals;
+
 import org.junit.Test;
 
-import java.io.PrintStream;
 
 public class ArithmeticTest {
-    private StringBuilder sb = new StringBuilder();
+    private StringBuilder sb;
 
     @Test
     public void checkPlus() {
         sb = new StringBuilder();
-        PrintStream printer = new PrintStream(System.out) {
-            @Override
-            public void print(String line) {
-                sb.append(line);
-            }
-        };
-        Interpreter interpreter = new Interpreter(printer);
-        interpreter.interpret("1 2 +");
-        interpreter.interpret(".");
-        TestCase.assertEquals("3", sb.toString());
+
+        Interpreter interpreter = new Interpreter(sb);
+        interpreter.interpret("1 2 +",".");
+        assertEquals("3", sb.toString());
     }
 
     @Test
     public void checkMinus() {
         sb = new StringBuilder();
-        PrintStream printer = new PrintStream(System.out) {
-            @Override
-            public void print(String line) {
-                sb.append(line);
-            }
-        };
-        Interpreter interpreter = new Interpreter(printer);
-        interpreter.interpret("1 2 -");
-        interpreter.interpret(".");
-        TestCase.assertEquals("-1", sb.toString());
+        Interpreter interpreter = new Interpreter(sb);
+        interpreter.interpret("1 2 -",".");
+        assertEquals("-1", sb.toString());
     }
 
     @Test
     public void checkMul() {
         sb = new StringBuilder();
-        PrintStream printer = new PrintStream(System.out) {
-            @Override
-            public void print(String line) {
-                sb.append(line);
-            }
-        };
-        Interpreter interpreter = new Interpreter(printer);
-        interpreter.interpret("1 0 *");
-        interpreter.interpret(".");
-        TestCase.assertEquals("0", sb.toString());
+        Interpreter interpreter = new Interpreter(sb);
+        interpreter.interpret("1 0 *",".");
+        assertEquals("0", sb.toString());
     }
 }

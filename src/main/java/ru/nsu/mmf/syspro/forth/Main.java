@@ -8,31 +8,19 @@ public class Main {//TODO try use sealed classes
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Appendable printer = new Appendable() {
-            @Override
-            public Appendable append(CharSequence csq) {
-                System.out.print(csq);
-                return null;
-            }
-
-            @Override
-            public Appendable append(CharSequence csq, int start, int end) {
-                return null;
-            }
-
-            @Override
-            public Appendable append(char c) {
-                return null;
-            }
-        };
-        Interpreter interpreter = new Interpreter(printer);
-        try {
+        Interpreter interpreter = new Interpreter(System.out);
+        boolean state = false;
+        while (!state) {
             String line = scanner.nextLine();
-            while (!interpreter.interpret(line)) {
-                line = scanner.nextLine();
+            try {
+                state = interpreter.interpret(line);
+            } catch (InterpreterException e) {
+                interpreter.print(e.getMessage() + '\n');
             }
-        } catch (InterpreterException e) {
-            interpreter.print(e.getMessage() + '\n');
+            if (state) {
+                break;
+            }
+
         }
     }
 }
