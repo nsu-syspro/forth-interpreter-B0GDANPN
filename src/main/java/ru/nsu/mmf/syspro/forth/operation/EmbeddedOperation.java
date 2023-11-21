@@ -31,13 +31,6 @@ public final class EmbeddedOperation implements Operation {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
-            case ".":
-                try {
-                    interpreter.print(Integer.toString(interpreter.pop()));
-                } catch (NoSuchElementException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
             case "swap":
                 try {
                     int r = interpreter.pop();

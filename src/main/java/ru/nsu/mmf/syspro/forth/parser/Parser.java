@@ -18,13 +18,20 @@ public class Parser {
                 case LOGIC -> new LogicOperation(tmp[i]);
                 case PUSH -> new PushOperation(Integer.parseInt(tmp[i]));
                 case PRINT_STRING -> {//TODO union . and print_string
-                    int j = i + 1;
-                    int prev_i = i + 1;
-                    while (tmp[j].charAt(tmp[j].length() - 1) != '"') {
-                        j++;
+                    String arg=null;
+                    if (tmp[i].equals(".\"")){
+                        StringBuilder sb=new StringBuilder();
+                        int j = i + 1;
+                        int prev_i = i + 1;
+                        while (tmp[j].charAt(tmp[j].length() - 1) != '"') {
+                            sb.append(tmp[j]);
+                            sb.append(' ');
+                            j++;
+                        }
+                        sb.append(tmp[j].substring(0, tmp[j].length() - 1));
+                        arg=sb.toString();
                     }
-                    i = j;
-                    yield new PrintStringOperation(tmp, prev_i, j);
+                    yield new PrintStringOperation(arg);
                 }
                 case ARITHMETIC -> new ArithmeticOperation(tmp[i]);
                 case EMBEDDED -> new EmbeddedOperation(tmp[i]);
@@ -45,8 +52,7 @@ public class Parser {
     }
 
     private boolean isEmbeddedOperation(String command) {
-        return command.equals("dup") || command.equals("drop") || command.equals(".")
-                || command.equals("swap") || command.equals("rot")
+        return command.equals("dup") || command.equals("drop")|| command.equals("swap") || command.equals("rot")
                 || command.equals("emit") || command.equals("cr")
                 || command.equals("exit") || command.equals("over");
     }
@@ -61,7 +67,7 @@ public class Parser {
     }
 
     private boolean isPrintString(String command) {
-        return command.equals(".\"");
+        return command.equals(".") || command.equals(".\"");
     }
 
     private boolean isNumeric(String command) {

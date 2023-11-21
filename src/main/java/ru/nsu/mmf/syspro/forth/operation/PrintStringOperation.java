@@ -1,25 +1,30 @@
 package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
+import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
+
+import java.util.NoSuchElementException;
 
 public final class PrintStringOperation implements Operation {
 
-    private final int start, end;
+    private final String text;
 
-    private final String[] text;
+    public PrintStringOperation(String str) {
 
-    public PrintStringOperation(String[] tmp, int start, int end) {
-        text = tmp;
-        this.start = start;
-        this.end = end;
+        text = str;
     }
 
     @Override
     public void apply(Interpreter interpreter) {
-        for (int i = start; i <= end - 1; i++) {
-            interpreter.print(text[i] + ' ');
+        if (text == null) {
+            try {
+                interpreter.print(Integer.toString(interpreter.pop()));
+            } catch (NoSuchElementException e) {
+                throw new InterpreterException("Not enough numbers on the stack");
+            }
         }
-        String endingStr = text[end];
-        interpreter.print(endingStr.substring(0, endingStr.length() - 1));
+        else {
+            interpreter.print(text);
+        }
     }
 }
