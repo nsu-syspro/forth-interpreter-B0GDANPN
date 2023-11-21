@@ -2,7 +2,7 @@ package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
 
-public final class PushOperation implements UnarOperation {
+public final class PushOperation implements Operation {
 
     private final int number;
 
