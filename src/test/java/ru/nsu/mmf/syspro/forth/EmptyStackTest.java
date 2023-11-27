@@ -1,7 +1,6 @@
 package ru.nsu.mmf.syspro.forth;
 
 import org.junit.Test;
-import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
 
 import static junit.framework.TestCase.assertEquals;
 

@@ -1,25 +1,39 @@
 package ru.nsu.mmf.syspro.forth;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
 
 import org.junit.Test;
+import ru.nsu.mmf.syspro.forth.operation.*;
+import ru.nsu.mmf.syspro.forth.parser.Parser;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ParserTest {
-    private StringBuilder sb;
-
     @Test
     public void parseEmpty() {
-        sb = new StringBuilder();
-        Interpreter interpreter = new Interpreter(sb);
-        interpreter.interpret("","","","","");
-        assertEquals("", sb.toString());
+        Parser parser = new Parser();
+
+        parser.parseLine(null, "");
+        assertNull(parser.nextOperation());
     }
 
+
     @Test
-    public void parseInvalid() {
-        sb = new StringBuilder();
-        Interpreter interpreter = new Interpreter(sb);
-        interpreter.interpret("A","3",".","cr","B");
-        assertEquals("3\n", sb.toString());
+    public void parseType() {
+        String arg = "1 2 + cr 10 >";
+        Parser parser = new Parser();
+        parser.parseLine(null, arg);
+        ArrayList<Operation> operations = new ArrayList<>(Arrays.asList(
+                new PushOperation(1),
+                new PushOperation(2),
+                new ArithmeticOperation("+"),
+                new EmbeddedOperation("cr"),
+                new PushOperation(10),
+                new LogicOperation(">")));
+        for (Operation operation : operations) {
+            assertEquals(parser.nextOperation().getClass(), operation.getClass());
+        }
     }
 }

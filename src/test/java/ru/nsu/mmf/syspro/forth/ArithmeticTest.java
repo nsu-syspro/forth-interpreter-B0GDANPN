@@ -1,8 +1,8 @@
 package ru.nsu.mmf.syspro.forth;
 
-import static junit.framework.TestCase.assertEquals;
-
 import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
 
 
 public class ArithmeticTest {
@@ -13,7 +13,7 @@ public class ArithmeticTest {
         sb = new StringBuilder();
 
         Interpreter interpreter = new Interpreter(sb);
-        interpreter.interpret("1 2 +",".");
+        interpreter.interpret("1 2 +", ".");
         assertEquals("3", sb.toString());
     }
 
@@ -21,7 +21,7 @@ public class ArithmeticTest {
     public void checkMinus() {
         sb = new StringBuilder();
         Interpreter interpreter = new Interpreter(sb);
-        interpreter.interpret("1 2 -",".");
+        interpreter.interpret("1 2 -", ".");
         assertEquals("-1", sb.toString());
     }
 
@@ -29,7 +29,7 @@ public class ArithmeticTest {
     public void checkMul() {
         sb = new StringBuilder();
         Interpreter interpreter = new Interpreter(sb);
-        interpreter.interpret("1 0 *",".");
+        interpreter.interpret("1 0 *", ".");
         assertEquals("0", sb.toString());
     }
 }

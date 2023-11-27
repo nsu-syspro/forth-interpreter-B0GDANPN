@@ -1,4 +1,4 @@
-package ru.nsu.mmf.syspro.forth.exceptions;
+package ru.nsu.mmf.syspro.forth;
 
 public class InterpreterException extends RuntimeException {
 

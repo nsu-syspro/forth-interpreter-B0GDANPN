@@ -1,7 +1,5 @@
 package ru.nsu.mmf.syspro.forth;
 
-import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
-
 import java.util.Scanner;
 
 public class Main {//TODO try use sealed classes

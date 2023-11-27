@@ -5,9 +5,9 @@ import org.junit.Test;
 
 public class EmptyLineTest {
     @Test
-    public void empty(){
+    public void empty() {
         StringBuilder sb = new StringBuilder();
-        Interpreter interpreter= new Interpreter(sb);
+        Interpreter interpreter = new Interpreter(sb);
         interpreter.interpret("");
     }
 }

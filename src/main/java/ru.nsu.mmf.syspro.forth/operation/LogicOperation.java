@@ -1,7 +1,7 @@
 package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
-import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
+import ru.nsu.mmf.syspro.forth.InterpreterException;
 
 import java.util.NoSuchElementException;
 

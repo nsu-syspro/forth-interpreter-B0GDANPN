@@ -10,7 +10,7 @@ public class Interpreter {
     private boolean finishedState = false;
     private final ArrayDeque<Integer> stack = new ArrayDeque<>();
 
-    public void push(Integer number) {
+    public void push(int number) {
         stack.addLast(number);
     }
 
@@ -47,7 +47,7 @@ public class Interpreter {
     public boolean interpret(String... lines) {
         Parser parser = new Parser();
         for (String line : lines) {
-            parser.parseLine(line);
+            parser.parseLine(this, line);
             Operation operation = parser.nextOperation();
             while (operation != null && !isExit()) {
                 operation.apply(this);
