@@ -5,7 +5,6 @@ import static junit.framework.TestCase.assertNull;
 
 import org.junit.Test;
 import ru.nsu.mmf.syspro.forth.operation.*;
-import ru.nsu.mmf.syspro.forth.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,9 +12,7 @@ import java.util.Arrays;
 public class ParserTest {
     @Test
     public void parseEmpty() {
-        Parser parser = new Parser();
-
-        parser.parseLine(null, "");
+        Parser parser = new Parser(null, "");
         assertNull(parser.nextOperation());
     }
 
@@ -23,8 +20,7 @@ public class ParserTest {
     @Test
     public void parseType() {
         String arg = "1 2 + cr 10 >";
-        Parser parser = new Parser();
-        parser.parseLine(null, arg);
+        Parser parser = new Parser(null,arg);
         ArrayList<Operation> operations = new ArrayList<>(Arrays.asList(
                 new PushOperation(1),
                 new PushOperation(2),

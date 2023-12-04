@@ -1,4 +1,4 @@
-package ru.nsu.mmf.syspro.forth.parser;
+package ru.nsu.mmf.syspro.forth;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
 import ru.nsu.mmf.syspro.forth.operation.*;
@@ -6,12 +6,12 @@ import ru.nsu.mmf.syspro.forth.operation.*;
 import java.util.ArrayList;
 
 public class Parser {
-
     private final ArrayList<Operation> operations = new ArrayList<>();
+
 
     private Integer it = 0;
 
-    public void parseLine(Interpreter interpreter, String line) {
+    private void parseLine(Interpreter interpreter, String line) {
         String[] tmp = line.split("\\s+");
         for (int i = 0; i < tmp.length; i++) {
             if (tmp[i].isEmpty()) {
@@ -48,6 +48,11 @@ public class Parser {
                 interpreter.print("Invalid operation: " + tmp[i] + "\n");
             }
         }
+    }
+    public Parser(Interpreter interpreter, String line) {
+
+        this.parseLine(interpreter, line);
+
     }
 
     public Operation nextOperation() {
