@@ -1,15 +1,15 @@
-package ru.nsu.mmf.syspro.forth.operations;
+package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
-import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
-
-import java.util.NoSuchElementException;
 
 public final class PushOperation implements Operation {
+
     private final int number;
-    public PushOperation(String line){
-        this.number=Integer.parseInt(line);
+
+    public PushOperation(int number) {
+        this.number = number;
     }
+
     @Override
     public void apply(Interpreter interpreter) {
         interpreter.push(number);

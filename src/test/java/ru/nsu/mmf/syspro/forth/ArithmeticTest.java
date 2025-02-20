@@ -1,52 +1,35 @@
 package ru.nsu.mmf.syspro.forth;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
-import java.io.PrintStream;
+import static junit.framework.TestCase.assertEquals;
+
 
 public class ArithmeticTest {
-    private StringBuilder sb=new StringBuilder();
+    private StringBuilder sb;
+
     @Test
-    public void checkPlus(){
-        sb=new StringBuilder();
-        PrintStream printer=new PrintStream(System.out){
-            @Override
-            public void print(String line) {
-                sb.append(line);
-            }
-        };
-        Interpreter interpreter= new Interpreter(printer);
-        interpreter.interpret("1 2 +");
-        interpreter.interpret(".");
-        TestCase.assertEquals("\n3\n",sb.toString());
+    public void checkPlus() {
+        sb = new StringBuilder();
+
+        Interpreter interpreter = new Interpreter(sb);
+        interpreter.interpret("1 2 +", ".");
+        assertEquals("3", sb.toString());
     }
+
     @Test
-    public void checkMinus(){
-        sb=new StringBuilder();
-        PrintStream printer=new PrintStream(System.out){
-            @Override
-            public void print(String line) {
-                sb.append(line);
-            }
-        };
-        Interpreter interpreter= new Interpreter(printer);
-        interpreter.interpret("1 2 -");
-        interpreter.interpret(".");
-        TestCase.assertEquals("\n-1\n",sb.toString());
+    public void checkMinus() {
+        sb = new StringBuilder();
+        Interpreter interpreter = new Interpreter(sb);
+        interpreter.interpret("1 2 -", ".");
+        assertEquals("-1", sb.toString());
     }
+
     @Test
-    public void checkMul(){
-        sb=new StringBuilder();
-        PrintStream printer=new PrintStream(System.out){
-            @Override
-            public void print(String line) {
-                sb.append(line);
-            }
-        };
-        Interpreter interpreter= new Interpreter(printer);
-        interpreter.interpret("1 0 *");
-        interpreter.interpret(".");
-        TestCase.assertEquals("\n0\n",sb.toString());
+    public void checkMul() {
+        sb = new StringBuilder();
+        Interpreter interpreter = new Interpreter(sb);
+        interpreter.interpret("1 0 *", ".");
+        assertEquals("0", sb.toString());
     }
 }

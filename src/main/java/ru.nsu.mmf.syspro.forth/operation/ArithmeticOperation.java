@@ -1,15 +1,18 @@
-package ru.nsu.mmf.syspro.forth.operations;
+package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
-import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
+import ru.nsu.mmf.syspro.forth.InterpreterException;
 
 import java.util.NoSuchElementException;
 
 public final class ArithmeticOperation implements Operation {
+
     private final String command;
-    public ArithmeticOperation(String command){
-        this.command=command;
+
+    public ArithmeticOperation(String command) {
+        this.command = command;
     }
+
     @Override
     public void apply(Interpreter interpreter) {
         int l, r;

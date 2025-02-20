@@ -1,15 +1,18 @@
-package ru.nsu.mmf.syspro.forth.operations;
+package ru.nsu.mmf.syspro.forth.operation;
 
 import ru.nsu.mmf.syspro.forth.Interpreter;
-import ru.nsu.mmf.syspro.forth.exceptions.InterpreterException;
+import ru.nsu.mmf.syspro.forth.InterpreterException;
 
 import java.util.NoSuchElementException;
 
 public final class EmbeddedOperation implements Operation {
+
     private final String command;
-    public EmbeddedOperation(String command){
-        this.command=command;
+
+    public EmbeddedOperation(String command) {
+        this.command = command;
     }
+
     @Override
     public void apply(Interpreter interpreter) {
         switch (command) {
@@ -28,13 +31,6 @@ public final class EmbeddedOperation implements Operation {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
                 break;
-            case ".":
-                try {
-                    interpreter.print(Integer.toString(interpreter.pop()));
-                } catch (NoSuchElementException e) {
-                    throw new InterpreterException("Not enough numbers on the stack");
-                }
-                break;
             case "swap":
                 try {
                     int r = interpreter.pop();
@@ -47,7 +43,7 @@ public final class EmbeddedOperation implements Operation {
                 break;
             case "rot":
                 try {
-                    int third =interpreter.pop();
+                    int third = interpreter.pop();
                     int second = interpreter.pop();
                     int first = interpreter.pop();
                     interpreter.push(third);
@@ -60,7 +56,7 @@ public final class EmbeddedOperation implements Operation {
             case "emit":
                 try {
                     int number = interpreter.pop();
-                    interpreter.print(Character.toString((char)number));
+                    interpreter.print(Character.toString((char) number));
                 } catch (NoSuchElementException e) {
                     throw new InterpreterException("Not enough numbers on the stack");
                 }
@@ -69,11 +65,11 @@ public final class EmbeddedOperation implements Operation {
                 interpreter.print("\n");
                 break;
             case "exit":
-                interpreter.setExit(true);
+                interpreter.stopInterpreter();
                 break;
             case "over":
                 try {
-                    int r =interpreter.pop();
+                    int r = interpreter.pop();
                     int l = interpreter.pop();
                     interpreter.push(l);
                     interpreter.push(r);
